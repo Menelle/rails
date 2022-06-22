@@ -743,7 +743,7 @@ module ActiveRecord
       #   create_database 'foo_development', :encoding => 'unicode'
       def create_database(name, options = {})
         options = options.reverse_merge(:encoding => "utf8")
-
+        puts "----------- options: #{options.symbolize_keys} ------------"
         option_string = options.symbolize_keys.map do |key, value|
           case key
           when :owner
@@ -759,7 +759,10 @@ module ActiveRecord
           else
             ""
           end
-        end
+        end.compact.join(' ')
+
+        puts "------------ option_string #{option_string} ----------"
+        puts "------------ quote_table_name(name) #{quote_table_name(name)} ----------"
 
         execute "CREATE DATABASE #{quote_table_name(name)}#{option_string}"
       end
