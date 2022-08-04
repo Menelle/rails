@@ -140,7 +140,7 @@ module ActiveSupport
           expires_in = options[:expires_in].to_i
           if expires_in > 0 && !options[:raw]
             # Set the memcache expire a few minutes in the future to support race condition ttls on read
-            expires_in += 5.minutes
+            expires_in += 5.minutes.to_i
           end
           response = @data.send(method, escape_key(key), value, expires_in, options[:raw])
           response == Response::STORED
